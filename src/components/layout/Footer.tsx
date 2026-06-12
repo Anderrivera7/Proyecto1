@@ -1,4 +1,5 @@
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { HashLink } from "@/components/ui/HashLink";
 import { Logo } from "@/components/ui/Logo";
 import { FacebookIcon, InstagramIcon } from "@/components/ui/SocialIcons";
 import {
@@ -16,12 +17,12 @@ export function Footer() {
       <div className="container-wide px-6 py-14 sm:px-8 sm:py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4">
-            <a href="#inicio" className="inline-flex items-center gap-2.5">
+            <HashLink href="#inicio" className="inline-flex items-center gap-2.5">
               <Logo className="h-8 w-8" />
               <span className="text-lg font-semibold tracking-[-0.02em] text-[#1d1d1f]">
                 {CLINIC.name}
               </span>
-            </a>
+            </HashLink>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#86868b]">
               {CLINIC.tagline}. Especialistas en odontología y ortodoncia en {CLINIC.district},{" "}
               {CLINIC.city}.
@@ -56,21 +57,21 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {NAV_LINKS.map((link) => (
                   <li key={link.href}>
-                    <a
+                    <HashLink
                       href={link.href}
                       className="text-sm text-[#86868b] transition-colors hover:text-sky-500"
                     >
                       {link.label}
-                    </a>
+                    </HashLink>
                   </li>
                 ))}
                 <li>
-                  <a
+                  <HashLink
                     href="#contacto"
                     className="text-sm font-medium text-sky-500 transition-colors hover:text-sky-600"
                   >
                     Reservar cita
-                  </a>
+                  </HashLink>
                 </li>
               </ul>
             </div>
@@ -82,12 +83,12 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {FOOTER_SERVICES.map((service) => (
                   <li key={service}>
-                    <a
+                    <HashLink
                       href="#servicios"
                       className="text-sm text-[#86868b] transition-colors hover:text-sky-500"
                     >
                       {service}
-                    </a>
+                    </HashLink>
                   </li>
                 ))}
               </ul>

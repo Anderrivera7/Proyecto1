@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
 import { CLINIC, NAV_LINKS } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { cn, scrollToHash } from "@/lib/utils";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +36,15 @@ export function Header() {
             scrolled && "glass max-w-3xl rounded-full py-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.08)]",
           )}
         >
-          <a href="#inicio" className="flex items-center gap-2" aria-label={`${CLINIC.name} inicio`}>
+          <a
+            href="#inicio"
+            className="flex items-center gap-2"
+            aria-label={`${CLINIC.name} inicio`}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToHash("#inicio");
+            }}
+          >
             <Logo className="h-8 w-8 shrink-0" />
             <span
               className={cn(
@@ -57,6 +65,10 @@ export function Header() {
                   "text-[13px] font-medium transition-colors duration-300",
                   scrolled ? "text-[#86868b] hover:text-[#1d1d1f]" : "text-white/85 hover:text-white",
                 )}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToHash(link.href);
+                }}
               >
                 {link.label}
               </a>
@@ -103,12 +115,20 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   className="block rounded-2xl px-4 py-3.5 text-[15px] font-medium text-[#1d1d1f] hover:bg-[#f5f5f7]"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToHash(link.href);
+                    setIsOpen(false);
+                  }}
                 >
                   {link.label}
                 </a>
               ))}
-              <Button href="#contacto" className="mt-2 w-full" onClick={() => setIsOpen(false)}>
+              <Button
+                href="#contacto"
+                className="mt-2 w-full"
+                onClick={() => setIsOpen(false)}
+              >
                 ¡Reserva tu cita!
               </Button>
             </div>

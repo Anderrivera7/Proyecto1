@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, scrollToHash } from "@/lib/utils";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "whatsapp" | "ghost" | "white";
 type ButtonSize = "sm" | "md" | "lg";
@@ -69,7 +71,15 @@ export function Button({
 
     if (href.startsWith("#")) {
       return (
-        <a href={href} className={styles} onClick={onClick}>
+        <a
+          href={href}
+          className={styles}
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToHash(href);
+            onClick?.(e);
+          }}
+        >
           {children}
         </a>
       );

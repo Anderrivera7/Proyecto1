@@ -193,14 +193,19 @@ export function ContactForm() {
           </form>
         </div>
 
-        <div className="mt-4">
+        <div id="ubicacion" className="mt-4 scroll-mt-24">
           <div className="mb-8 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sky-500">
               Ubicación
             </p>
             <h3 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[#1d1d1f] sm:text-3xl">
-              Visítanos en Miraflores
+              {CLINIC.locationHeadline}
             </h3>
+            {CLINIC.locationSubtext && !CLINIC.address && (
+              <p className="mx-auto mt-3 max-w-md text-sm text-[#86868b]">
+                {CLINIC.locationSubtext}
+              </p>
+            )}
           </div>
           <LocationMap />
         </div>

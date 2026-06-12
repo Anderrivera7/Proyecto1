@@ -10,8 +10,8 @@ import type {
 export const CLINIC = {
   name: "DentalSmile",
   tagline: "Tu sonrisa, nuestra prioridad",
-  city: "Lima",
-  district: "Miraflores",
+  city: "",
+  district: "",
   country: "Perú",
   phone: "+51 999 999 999",
   phoneHref: "tel:+51999999999",
@@ -19,18 +19,18 @@ export const CLINIC = {
   phoneSecondaryHref: "tel:+5114567890",
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "51999999999",
   whatsappMessage:
-    "Hola, me gustaría agendar una cita en DentalSmile Miraflores. ¿Tienen disponibilidad?",
+    "Hola, me gustaría agendar una cita en DentalSmile. ¿Tienen disponibilidad?",
   email: "citas@dentalsmile.pe",
   emailHref: "mailto:citas@dentalsmile.pe",
-  address: "Av. Arequipa 1234, Miraflores, Lima, Perú",
-  shortAddress: "Av. Arequipa 1234, Miraflores, Lima",
+  address: "",
+  shortAddress: "",
+  locationHeadline: "Visítanos",
+  locationSubtext: "Agenda tu cita y conoce nuestras instalaciones.",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   schedule: "Lun – Sáb: 8:00 – 20:00 · Dom: 9:00 – 14:00",
-  googleMapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Av.+Arequipa+1234,+Miraflores,+Lima,+Perú",
-  googleMapsEmbedUrl:
-    "https://maps.google.com/maps?q=Av.+Arequipa+1234,+Miraflores,+Lima,+Per%C3%BA&hl=es&z=16&output=embed",
-  wazeUrl: "https://waze.com/ul?q=Av.+Arequipa+1234,+Miraflores,+Lima,+Perú&navigate=yes",
+  googleMapsUrl: "",
+  googleMapsEmbedUrl: "",
+  wazeUrl: "",
   images: {
     carousel: [
       {
@@ -58,17 +58,22 @@ export const CLINIC = {
 export const NAV_LINKS = [
   { label: "Nosotros", href: "#nosotros" },
   { label: "Servicios", href: "#servicios" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Testimonios", href: "#testimonios" },
 ] as const;
+
+export const CTA_RESERVA = {
+  label: "¡Reserva tu cita!",
+  href: "#contacto",
+} as const;
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
     src: "/images/hero-1.png",
     alt: "Dentista realizando evaluación dental a paciente en clínica moderna",
-    eyebrow: "Clínica dental en Miraflores",
+    eyebrow: "Clínica dental de confianza",
     title: "Recupera tu sonrisa",
     titleLine2: "con especialistas de confianza",
-    subtitle: "Atención integral y especialistas de confianza en el corazón de Lima.",
+    subtitle: "Atención integral y especialistas dedicados a cuidar de ti.",
   },
   {
     src: "/images/hero-2.png",

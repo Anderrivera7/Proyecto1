@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import { FEATURED_SERVICES } from "@/lib/constants";
+import { CTA_RESERVA, FEATURED_SERVICES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function Services() {
@@ -37,7 +37,7 @@ export function Services() {
               <p className="mt-5 text-base leading-relaxed text-[#86868b] sm:text-lg">
                 {service.description}
               </p>
-              <Button href="#contacto" className="mt-8">
+              <Button href={CTA_RESERVA.href} className="mt-8">
                 Ver servicio
               </Button>
             </div>

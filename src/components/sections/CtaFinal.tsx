@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { CTA_RESERVA } from "@/lib/constants";
 
 export function CtaFinal() {
   return (
@@ -16,10 +17,10 @@ export function CtaFinal() {
           Agenda hoy y recibe atención personalizada de nuestros especialistas.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button href="#contacto" size="lg">
-            ¡Reserva tu cita!
+          <Button href={CTA_RESERVA.href} size="lg">
+            {CTA_RESERVA.label}
           </Button>
-          <Button href="#contacto" variant="outline" size="lg">
+          <Button href="#ubicacion" variant="outline" size="lg">
             Ver ubicación
           </Button>
         </div>

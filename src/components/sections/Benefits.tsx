@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import { BENEFITS, CLINIC } from "@/lib/constants";
+import { BENEFITS, CLINIC, CTA_RESERVA } from "@/lib/constants";
 
 export function Benefits() {
   return (
@@ -11,8 +11,8 @@ export function Benefits() {
             Clínica
           </p>
           <h2 className="text-display mt-3 text-[#1d1d1f]">{CLINIC.name}</h2>
-          <Button href="#contacto" variant="outline" className="mt-8">
-            Conócenos
+          <Button href={CTA_RESERVA.href} className="mt-8">
+            {CTA_RESERVA.label}
           </Button>
         </div>
 
@@ -34,7 +34,7 @@ export function Benefits() {
             <div className="relative aspect-[21/9] w-full">
               <Image
                 src={CLINIC.images.about}
-                alt="Equipo profesional de DentalSmile en clínica dental de Lima"
+                alt="Equipo profesional de DentalSmile en clínica dental"
                 fill
                 quality={92}
                 sizes="(max-width: 768px) 100vw, 768px"

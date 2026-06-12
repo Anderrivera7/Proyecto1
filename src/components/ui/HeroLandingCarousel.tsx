@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { CTA_RESERVA } from "@/lib/constants";
 import type { HeroSlide } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -95,11 +96,11 @@ export function HeroLandingCarousel({ slides, intervalMs = 6000 }: HeroLandingCa
                 Conócenos
               </Button>
               <Button
-                href="#contacto"
+                href={CTA_RESERVA.href}
                 size="lg"
                 className="border border-white/30 bg-white/15 text-white backdrop-blur-sm hover:bg-white/25"
               >
-                ¡Reserva tu cita!
+                {CTA_RESERVA.label}
               </Button>
             </div>
           </motion.div>

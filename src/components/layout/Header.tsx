@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
-import { CLINIC, NAV_LINKS } from "@/lib/constants";
+import { CLINIC, CTA_RESERVA, NAV_LINKS } from "@/lib/constants";
 import { cn, scrollToHash } from "@/lib/utils";
 
 export function Header() {
@@ -33,7 +33,7 @@ export function Header() {
         <div
           className={cn(
             "container-wide mx-auto flex items-center justify-between px-6 transition-all duration-500 sm:px-8",
-            scrolled && "glass max-w-3xl rounded-full py-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.08)]",
+            scrolled && "glass max-w-4xl rounded-full py-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.08)]",
           )}
         >
           <a
@@ -77,11 +77,11 @@ export function Header() {
 
           <div className="hidden md:block">
             <Button
-              href="#contacto"
+              href={CTA_RESERVA.href}
               size="sm"
               variant={scrolled ? "primary" : "white"}
             >
-              ¡Reserva tu cita!
+              {CTA_RESERVA.label}
             </Button>
           </div>
 
@@ -125,11 +125,11 @@ export function Header() {
                 </a>
               ))}
               <Button
-                href="#contacto"
+                href={CTA_RESERVA.href}
                 className="mt-2 w-full"
                 onClick={() => setIsOpen(false)}
               >
-                ¡Reserva tu cita!
+                {CTA_RESERVA.label}
               </Button>
             </div>
           </motion.nav>

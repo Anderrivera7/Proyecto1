@@ -13,7 +13,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 const siteDescription =
-  "Clínica dental DentalSmile en Miraflores, Lima. Especialistas en limpieza, ortodoncia, implantes, blanqueamiento, endodoncia y odontopediatría. Agenda tu cita hoy.";
+  "Clínica dental DentalSmile. Especialistas en limpieza, ortodoncia, implantes, blanqueamiento, endodoncia y odontopediatría. Agenda tu cita hoy.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(CLINIC.siteUrl),
@@ -30,8 +30,6 @@ export const metadata: Metadata = {
     "blanqueamiento dental",
     "endodoncia",
     "limpieza dental",
-    "Miraflores",
-    "Lima",
     "Perú",
   ],
   authors: [{ name: CLINIC.name }],
@@ -48,7 +46,7 @@ export const metadata: Metadata = {
         url: `${CLINIC.siteUrl}${HERO_SLIDES[0].src}`,
         width: 1200,
         height: 630,
-        alt: "Dentista realizando evaluación dental a paciente en clínica de Miraflores, Lima",
+        alt: "Dentista realizando evaluación dental a paciente en clínica moderna",
       },
     ],
   },

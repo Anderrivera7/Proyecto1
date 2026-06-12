@@ -4,6 +4,7 @@ import { Logo } from "@/components/ui/Logo";
 import { FacebookIcon, InstagramIcon } from "@/components/ui/SocialIcons";
 import {
   CLINIC,
+  CTA_RESERVA,
   FOOTER_LEGAL,
   FOOTER_SERVICES,
   NAV_LINKS,
@@ -24,8 +25,8 @@ export function Footer() {
               </span>
             </HashLink>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#86868b]">
-              {CLINIC.tagline}. Especialistas en odontología y ortodoncia en {CLINIC.district},{" "}
-              {CLINIC.city}.
+              {CLINIC.tagline}. Especialistas en odontología y ortodoncia
+              {CLINIC.city ? ` en ${CLINIC.district ? `${CLINIC.district}, ` : ""}${CLINIC.city}.` : "."}
             </p>
             <div className="mt-6 flex gap-3">
               <a
@@ -67,10 +68,10 @@ export function Footer() {
                 ))}
                 <li>
                   <HashLink
-                    href="#contacto"
+                    href={CTA_RESERVA.href}
                     className="text-sm font-medium text-sky-500 transition-colors hover:text-sky-600"
                   >
-                    Reservar cita
+                    {CTA_RESERVA.label}
                   </HashLink>
                 </li>
               </ul>
@@ -118,10 +119,12 @@ export function Footer() {
                   {CLINIC.email}
                 </a>
               </li>
-              <li className="flex items-start gap-2.5 text-sm text-[#86868b]">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-sky-500" aria-hidden="true" />
-                {CLINIC.shortAddress}
-              </li>
+              {CLINIC.shortAddress && (
+                <li className="flex items-start gap-2.5 text-sm text-[#86868b]">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-sky-500" aria-hidden="true" />
+                  {CLINIC.shortAddress}
+                </li>
+              )}
               <li className="flex items-start gap-2.5 text-sm text-[#86868b]">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-sky-500" aria-hidden="true" />
                 {CLINIC.schedule}

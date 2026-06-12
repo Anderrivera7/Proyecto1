@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export function Testimonials() {
   return (
-    <section className="section-padding surface-section">
+    <section id="testimonios" className="section-padding surface-section">
       <div className="container-main">
         <div className="animate-reveal text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sky-500">

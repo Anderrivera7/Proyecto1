@@ -6,22 +6,22 @@ type ButtonSize = "sm" | "md" | "lg";
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-500 shadow-md shadow-blue-600/20",
+    "bg-sky-500 text-white hover:bg-sky-600 focus-visible:ring-sky-400/50 shadow-[0_2px_12px_rgba(56,189,248,0.35)]",
   secondary:
-    "bg-white text-blue-700 hover:bg-blue-50 focus-visible:ring-blue-400 border border-blue-100 shadow-sm",
+    "bg-[#f5f5f7] text-[#1d1d1f] hover:bg-[#e8e8ed] focus-visible:ring-sky-400/50",
   outline:
-    "border-2 border-blue-200 bg-transparent text-blue-700 hover:border-blue-400 hover:bg-blue-50 focus-visible:ring-blue-400",
+    "border border-black/[0.08] bg-transparent text-sky-600 hover:bg-sky-50/80 focus-visible:ring-sky-400/50",
   whatsapp:
-    "bg-emerald-500 text-white hover:bg-emerald-600 focus-visible:ring-emerald-400 shadow-md shadow-emerald-500/20",
-  ghost: "bg-transparent text-blue-700 hover:bg-blue-50 focus-visible:ring-blue-400",
+    "bg-[#25D366] text-white hover:bg-[#20bd5a] focus-visible:ring-emerald-400/50 shadow-[0_2px_12px_rgba(37,211,102,0.35)]",
+  ghost: "bg-transparent text-sky-600 hover:bg-sky-50/80 focus-visible:ring-sky-400/50",
   white:
-    "bg-white text-blue-700 hover:bg-blue-50 focus-visible:ring-white shadow-md",
+    "bg-white text-sky-600 hover:bg-white/90 focus-visible:ring-white/50 shadow-[0_2px_16px_rgba(0,0,0,0.08)]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-5 py-2.5 text-sm",
-  md: "px-6 py-3 text-sm",
-  lg: "px-8 py-4 text-base",
+  sm: "px-4 py-2 text-[13px]",
+  md: "px-5 py-2.5 text-sm",
+  lg: "px-7 py-3.5 text-[15px]",
 };
 
 type ButtonProps = {
@@ -46,7 +46,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const styles = cn(
-    "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
+    "inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-[-0.01em] transition-all duration-300 ease-out hover:brightness-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     variantStyles[variant],
     sizeStyles[size],
     className,

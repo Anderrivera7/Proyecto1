@@ -1,5 +1,7 @@
 import type {
   Benefit,
+  FeaturedService,
+  HeroSlide,
   PlatformRating,
   ProcessStep,
   Service,
@@ -15,18 +17,38 @@ export const CLINIC = {
   country: "Perú",
   phone: "+51 999 999 999",
   phoneHref: "tel:+51999999999",
+  phoneSecondary: "(01) 456 7890",
+  phoneSecondaryHref: "tel:+5114567890",
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "51999999999",
+  whatsappMessage:
+    "Hola, me gustaría agendar una cita en DentalSmile Miraflores. ¿Tienen disponibilidad?",
   email: "citas@dentalsmile.pe",
   emailHref: "mailto:citas@dentalsmile.pe",
   address: "Av. Arequipa 1234, Miraflores, Lima, Perú",
   shortAddress: "Av. Arequipa 1234, Miraflores, Lima",
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "51999999999",
-  whatsappMessage:
-    "Hola, me gustaría agendar una cita en DentalSmile Miraflores. ¿Tienen disponibilidad?",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   schedule: "Lun – Sáb: 8:00 – 20:00 · Dom: 9:00 – 14:00",
+  googleMapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Av.+Arequipa+1234,+Miraflores,+Lima,+Perú",
+  googleMapsEmbedUrl:
+    "https://maps.google.com/maps?q=Av.+Arequipa+1234,+Miraflores,+Lima,+Per%C3%BA&hl=es&z=16&output=embed",
+  wazeUrl: "https://waze.com/ul?q=Av.+Arequipa+1234,+Miraflores,+Lima,+Perú&navigate=yes",
   images: {
-    hero: "/images/hero-dental.png",
-    about: "/images/about-dental.png",
+    carousel: [
+      {
+        src: "/images/hero-1.png",
+        alt: "Dentista realizando evaluación dental a paciente en clínica moderna",
+      },
+      {
+        src: "/images/hero-2.png",
+        alt: "Equipo de odontólogos profesionales en clínica dental",
+      },
+      {
+        src: "/images/hero-3.png",
+        alt: "Especialista dental atendiendo a paciente con equipamiento de última generación",
+      },
+    ],
+    about: "/images/about-team.png",
   },
   social: {
     facebook: "https://facebook.com/dentalsmile.pe",
@@ -36,11 +58,54 @@ export const CLINIC = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: "Inicio", href: "#inicio" },
+  { label: "Nosotros", href: "#nosotros" },
   { label: "Servicios", href: "#servicios" },
-  { label: "Testimonios", href: "#testimonios" },
   { label: "Contacto", href: "#contacto" },
 ] as const;
+
+export const HERO_SLIDES: HeroSlide[] = [
+  {
+    src: "/images/hero-1.png",
+    alt: "Dentista realizando evaluación dental a paciente en clínica moderna",
+    eyebrow: "Clínica dental en Miraflores",
+    title: "Recupera tu sonrisa",
+    titleLine2: "con especialistas de confianza",
+    subtitle: "Atención integral y especialistas de confianza en el corazón de Lima.",
+  },
+  {
+    src: "/images/hero-2.png",
+    alt: "Equipo de odontólogos profesionales en clínica dental",
+    eyebrow: "Profesionales certificados",
+    title: "Tu sonrisa en",
+    titleLine2: "las mejores manos",
+    subtitle: "Odontólogos especializados con más de 10 años de experiencia.",
+  },
+  {
+    src: "/images/hero-3.png",
+    alt: "Especialista dental atendiendo a paciente con equipamiento moderno",
+    eyebrow: "Atención personalizada",
+    title: "Cuidamos tu sonrisa",
+    titleLine2: "como si fuera la nuestra",
+    subtitle: "Ambiente cálido, trato cercano y resultados que perduran.",
+  },
+];
+
+export const FEATURED_SERVICES: FeaturedService[] = [
+  {
+    id: "odontologia",
+    title: "Odontología",
+    description:
+      "En DentalSmile contamos con todas las especialidades odontológicas para brindarte un servicio integral: limpieza, implantes, endodoncia, blanqueamiento y odontopediatría con la más alta calidad.",
+    image: "/images/hero-1.png",
+  },
+  {
+    id: "ortodoncia",
+    title: "Ortodoncia",
+    description:
+      "La ortodoncia es mucho más que alinear dientes; es una inversión en tu sonrisa y salud. Con brackets metálicos, estéticos y alineadores invisibles, mejoramos tu mordida, estética y confianza.",
+    image: "/images/hero-2.png",
+  },
+];
 
 export const FOOTER_SERVICES = [
   "Limpieza dental",
@@ -204,7 +269,7 @@ export const PROCESS_STEPS: ProcessStep[] = [
     step: 1,
     title: "Agenda tu cita",
     description:
-      "Reserva en línea o vía WhatsApp en menos de 2 minutos. Confirmación inmediata.",
+      "Reserva en línea en menos de 2 minutos. Confirmación inmediata.",
     icon: "calendar",
   },
   {
@@ -233,4 +298,54 @@ export const PROCESS_STEPS: ProcessStep[] = [
 export function getWhatsAppUrl(message?: string): string {
   const text = encodeURIComponent(message ?? CLINIC.whatsappMessage);
   return `https://wa.me/${CLINIC.whatsappNumber}?text=${text}`;
+}
+
+export function buildAppointmentWhatsAppMessage(data: {
+  nombre: string;
+  telefono: string;
+  correo: string;
+  fecha_cita: string;
+  servicio: string;
+  mensaje?: string;
+}): string {
+  const lines = [
+    `Hola, quiero agendar una cita en ${CLINIC.name}.`,
+    "",
+    `*Nombre:* ${data.nombre.trim()}`,
+    `*Teléfono:* ${data.telefono.trim()}`,
+    `*Correo:* ${data.correo.trim()}`,
+    `*Fecha preferida:* ${data.fecha_cita}`,
+    `*Servicio:* ${data.servicio}`,
+  ];
+
+  if (data.mensaje?.trim()) {
+    lines.push(`*Mensaje:* ${data.mensaje.trim()}`);
+  }
+
+  return lines.join("\n");
+}
+
+export function buildAppointmentEmailBody(data: {
+  nombre: string;
+  telefono: string;
+  correo: string;
+  fecha_cita: string;
+  servicio: string;
+  mensaje?: string;
+}): string {
+  const lines = [
+    "Solicitud de cita desde la web:",
+    "",
+    `Nombre: ${data.nombre.trim()}`,
+    `Teléfono: ${data.telefono.trim()}`,
+    `Correo: ${data.correo.trim()}`,
+    `Fecha preferida: ${data.fecha_cita}`,
+    `Servicio: ${data.servicio}`,
+  ];
+
+  if (data.mensaje?.trim()) {
+    lines.push(`Mensaje: ${data.mensaje.trim()}`);
+  }
+
+  return lines.join("\n");
 }

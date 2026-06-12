@@ -3,7 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
-import { CLINIC } from "@/lib/constants";
+import { CLINIC, HERO_SLIDES } from "@/lib/constants";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: `${CLINIC.siteUrl}${CLINIC.images.hero}`,
+        url: `${CLINIC.siteUrl}${HERO_SLIDES[0].src}`,
         width: 1200,
         height: 630,
         alt: "Dentista realizando evaluación dental a paciente en clínica de Miraflores, Lima",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: `${CLINIC.name} | Clínica Dental Especializada`,
     description: siteDescription,
     images: [
-      `${CLINIC.siteUrl}${CLINIC.images.hero}`,
+      `${CLINIC.siteUrl}${HERO_SLIDES[0].src}`,
     ],
   },
   robots: {
@@ -76,7 +76,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${jakarta.variable} scroll-smooth`}>
-      <body className="min-h-screen bg-white font-sans text-slate-900 antialiased">
+      <body className="min-h-screen bg-white font-sans text-[#1d1d1f] antialiased">
         <Header />
         <main>{children}</main>
         <Footer />

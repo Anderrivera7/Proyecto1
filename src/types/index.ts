@@ -1,3 +1,19 @@
+export interface HeroSlide {
+  src: string;
+  alt: string;
+  eyebrow: string;
+  title: string;
+  titleLine2?: string;
+  subtitle?: string;
+}
+
+export interface FeaturedService {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
 export interface LeadFormData {
   nombre: string;
   telefono: string;

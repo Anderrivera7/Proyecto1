@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const nextConfig: NextConfig = {
-  outputFileTracingRoot: process.cwd(),
+  // Evita que Next.js use el lockfile de C:\Users\User\ como raíz del proyecto
+  outputFileTracingRoot: path.resolve(__dirname),
   images: {
     qualities: [75, 92],
     remotePatterns: [

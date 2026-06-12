@@ -20,7 +20,7 @@ export function Select({
 
   return (
     <div className="space-y-2">
-      <label htmlFor={selectId} className="block text-sm font-semibold text-slate-700">
+      <label htmlFor={selectId} className="block text-[13px] font-medium text-[#86868b]">
         {label}
       </label>
       <select
@@ -28,8 +28,8 @@ export function Select({
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${selectId}-error` : undefined}
         className={cn(
-          "w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3.5 text-slate-900 outline-none transition-all focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100",
-          error && "border-red-400 focus:border-red-400 focus:ring-red-100",
+          "w-full rounded-xl border border-black/[0.06] bg-[#f5f5f7]/80 px-4 py-3.5 text-[15px] text-[#1d1d1f] outline-none transition-all duration-300 focus:border-sky-400/50 focus:bg-white focus:shadow-[0_0_0_4px_rgba(56,189,248,0.12)]",
+          error && "border-red-300 focus:border-red-400 focus:shadow-[0_0_0_4px_rgba(239,68,68,0.1)]",
           className,
         )}
         {...props}

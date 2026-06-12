@@ -1,64 +1,49 @@
-import {
-  Activity,
-  AlignCenter,
-  Baby,
-  CircleDot,
-  Sparkles,
-  Sun,
-  type LucideIcon,
-} from "lucide-react";
-import { Card } from "@/components/ui/Card";
-import { FadeIn } from "@/components/ui/FadeIn";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
-import { SERVICES } from "@/lib/constants";
-
-const iconMap: Record<string, LucideIcon> = {
-  sparkles: Sparkles,
-  "align-center": AlignCenter,
-  "circle-dot": CircleDot,
-  sun: Sun,
-  activity: Activity,
-  baby: Baby,
-};
+import Image from "next/image";
+import { Button } from "@/components/ui/Button";
+import { FEATURED_SERVICES } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 export function Services() {
   return (
-    <section id="servicios" className="section-padding bg-slate-50/60">
-      <div className="container-main">
-        <FadeIn>
-          <SectionHeading
-            eyebrow="Nuestros servicios"
-            title={
-              <>
-                Tratamientos dentales{" "}
-                <span className="gradient-text">de alto nivel</span>
-              </>
-            }
-            description="Contamos con especialistas certificados en cada área para brindarte la mejor atención."
-          />
-        </FadeIn>
+    <section id="servicios" className="bg-white">
+      {FEATURED_SERVICES.map((service, index) => (
+        <div
+          key={service.id}
+          className={cn(
+            "border-b border-black/[0.04]",
+            index % 2 === 1 ? "surface-section" : "bg-white",
+          )}
+        >
+          <div className="container-wide grid items-center gap-10 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16 lg:py-28">
+            <div className={cn("w-full min-w-0", index % 2 === 1 && "lg:order-2")}>
+              <div className="overflow-hidden rounded-[1.5rem] bg-sky-50 shadow-[0_16px_48px_rgba(56,189,248,0.12)] ring-1 ring-sky-100">
+                <div className="relative aspect-[4/3] w-full">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    quality={92}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
 
-        <StaggerContainer className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((service) => {
-            const Icon = iconMap[service.icon] ?? Sparkles;
-
-            return (
-              <StaggerItem key={service.id}>
-                <Card hover className="h-full">
-                  <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
-                    <Icon className="h-6 w-6" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900">{service.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                    {service.description}
-                  </p>
-                </Card>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
-      </div>
+            <div className={cn("w-full min-w-0", index % 2 === 1 && "lg:order-1")}>
+              <h2 className="text-3xl font-semibold tracking-[-0.02em] text-[#1d1d1f] sm:text-4xl">
+                {service.title}
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-[#86868b] sm:text-lg">
+                {service.description}
+              </p>
+              <Button href="#contacto" className="mt-8">
+                Ver servicio
+              </Button>
+            </div>
+          </div>
+        </div>
+      ))}
     </section>
   );
 }

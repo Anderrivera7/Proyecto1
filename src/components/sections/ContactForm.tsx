@@ -2,22 +2,17 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  Clock,
-  Loader2,
-  Mail,
-  MapPin,
-  Phone,
-  Send,
-} from "lucide-react";
+import { Clock, Mail, Phone, Send } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { FadeIn } from "@/components/ui/FadeIn";
 import { Input } from "@/components/ui/Input";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { LocationMap } from "@/components/sections/LocationMap";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
-import { CLINIC, SERVICE_OPTIONS } from "@/lib/constants";
-import { createBrowserClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import {
+  buildAppointmentEmailBody,
+  CLINIC,
+  SERVICE_OPTIONS,
+} from "@/lib/constants";
 import type { LeadFormData } from "@/types";
 
 const defaultValues: LeadFormData = {
@@ -29,170 +24,101 @@ const defaultValues: LeadFormData = {
   mensaje: "",
 };
 
-const contactCards = [
-  {
-    icon: Phone,
-    label: "Llámanos",
-    value: CLINIC.phone,
-    href: CLINIC.phoneHref,
-    note: CLINIC.schedule,
-  },
-  {
-    icon: Mail,
-    label: "Escríbenos",
-    value: CLINIC.email,
-    href: CLINIC.emailHref,
-    note: "Respondemos en menos de 24 horas",
-  },
-  {
-    icon: MapPin,
-    label: "Visítanos",
-    value: CLINIC.address,
-    note: "Estacionamiento disponible",
-  },
-  {
-    icon: Clock,
-    label: "Horarios",
-    value: CLINIC.schedule,
-    note: "Citas de emergencia disponibles",
-  },
+const quickContact = [
+  { icon: Phone, label: "Teléfono", value: CLINIC.phone, href: CLINIC.phoneHref },
+  { icon: Mail, label: "Correo", value: CLINIC.email, href: CLINIC.emailHref },
+  { icon: Clock, label: "Horarios", value: CLINIC.schedule },
 ];
 
 export function ContactForm() {
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">(
-    "idle",
-  );
-  const [errorMessage, setErrorMessage] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success">("idle");
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LeadFormData>({
     defaultValues,
     mode: "onBlur",
   });
 
-  const onSubmit = async (data: LeadFormData) => {
-    setSubmitStatus("idle");
-    setErrorMessage("");
-
-    try {
-      if (!isSupabaseConfigured()) {
-        throw new Error(
-          "Supabase no está configurado. Añade NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY en .env.local.",
-        );
-      }
-
-      const supabase = createBrowserClient();
-
-      const { error } = await supabase.from("leads").insert([
-        {
-          nombre: data.nombre.trim(),
-          telefono: data.telefono.trim(),
-          correo: data.correo.trim(),
-          fecha_cita: data.fecha_cita,
-          servicio: data.servicio,
-          mensaje: data.mensaje?.trim() || null,
-        },
-      ]);
-
-      if (error) throw error;
-
-      setSubmitStatus("success");
-      reset(defaultValues);
-    } catch (error) {
-      setSubmitStatus("error");
-      const message =
-        error instanceof Error
-          ? error.message
-          : typeof error === "object" && error !== null && "message" in error
-            ? String((error as { message: unknown }).message)
-            : "No pudimos enviar tu solicitud. Intenta nuevamente.";
-      setErrorMessage(message);
-    }
+  const onSubmit = (data: LeadFormData) => {
+    const subject = encodeURIComponent(`Cita web - ${data.nombre.trim()}`);
+    const body = encodeURIComponent(buildAppointmentEmailBody(data));
+    window.location.href = `mailto:${CLINIC.email}?subject=${subject}&body=${body}`;
+    setSubmitStatus("success");
+    reset(defaultValues);
   };
 
   return (
-    <section id="contacto" className="section-padding bg-slate-50/60">
+    <section id="contacto" className="bg-white pb-0 pt-20 sm:pt-24 lg:pt-28">
       <div className="container-main">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <FadeIn>
-            <SectionHeading
-              align="left"
-              eyebrow="Reserva tu cita"
-              title={
-                <>
-                  Agenda tu cita{" "}
-                  <span className="gradient-text">en minutos</span>
-                </>
-              }
-              description="Completa el formulario o contáctanos directamente. Te responderemos a la brevedad para confirmar tu consulta."
-            />
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sky-500">
+            Contacto
+          </p>
+          <h2 className="text-display mt-4 text-[#1d1d1f]">
+            ¿Tienes alguna duda?
+          </h2>
+          <p className="text-subhead mx-auto mt-5">
+            Déjanos un mensaje y te responderemos lo antes posible.
+          </p>
+        </div>
 
-            <div className="mt-8 space-y-4">
-              {contactCards.map((card) => {
-                const Icon = card.icon;
-                const valueContent = card.href ? (
-                  <a
-                    href={card.href}
-                    className="mt-1 block text-sm font-semibold text-slate-800 transition-colors hover:text-blue-600"
-                  >
-                    {card.value}
-                  </a>
-                ) : (
-                  <p className="mt-1 text-sm font-semibold text-slate-800">{card.value}</p>
-                );
+        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          {quickContact.map((item) => {
+            const Icon = item.icon;
+            const content = item.href ? (
+              <a
+                href={item.href}
+                className="mt-1 block text-sm text-[#86868b] transition-colors hover:text-sky-500"
+              >
+                {item.value}
+              </a>
+            ) : (
+              <p className="mt-1 text-sm text-[#86868b]">{item.value}</p>
+            );
 
-                return (
-                  <div
-                    key={card.label}
-                    className="flex gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
-                  >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-blue-600">
-                        {card.label}
-                      </p>
-                      {valueContent}
-                      <p className="mt-0.5 text-xs text-slate-500">{card.note}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </FadeIn>
+            return (
+              <div
+                key={item.label}
+                className="card-hover rounded-2xl border border-black/[0.04] bg-[#fbfbfd] p-5 text-center"
+              >
+                <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-500">
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </div>
+                <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-[#1d1d1f]">
+                  {item.label}
+                </p>
+                {content}
+              </div>
+            );
+          })}
+        </div>
 
-          <FadeIn delay={0.1}>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              noValidate
-              className="rounded-3xl border border-slate-100 bg-white p-6 shadow-lg sm:p-8"
-            >
+        <div className="mx-auto mt-12 max-w-2xl">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            className="rounded-[1.75rem] border border-black/[0.04] bg-[#fbfbfd] p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] sm:p-10"
+          >
+            <div className="space-y-4">
               <Input
-                label="Nombre completo *"
-                placeholder="Tu nombre completo"
+                label="Nombre completo"
+                placeholder="Tu nombre"
                 autoComplete="name"
                 error={errors.nombre?.message}
                 {...register("nombre", {
                   required: "El nombre es obligatorio",
-                  minLength: {
-                    value: 2,
-                    message: "El nombre debe tener al menos 2 caracteres",
-                  },
-                  maxLength: {
-                    value: 100,
-                    message: "El nombre no puede exceder 100 caracteres",
-                  },
+                  minLength: { value: 2, message: "Mínimo 2 caracteres" },
+                  maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
               />
 
-              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <Input
-                  label="Teléfono *"
+                  label="Teléfono"
                   type="tel"
                   placeholder="+51 999 999 999"
                   autoComplete="tel"
@@ -201,13 +127,12 @@ export function ContactForm() {
                     required: "El teléfono es obligatorio",
                     pattern: {
                       value: /^[\d\s+\-()]{7,20}$/,
-                      message: "Ingresa un teléfono válido",
+                      message: "Teléfono inválido",
                     },
                   })}
                 />
-
                 <Input
-                  label="Correo *"
+                  label="Correo"
                   type="email"
                   placeholder="correo@ejemplo.com"
                   autoComplete="email"
@@ -216,25 +141,24 @@ export function ContactForm() {
                     required: "El correo es obligatorio",
                     pattern: {
                       value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Ingresa un correo electrónico válido",
+                      message: "Correo inválido",
                     },
                   })}
                 />
               </div>
 
-              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <Input
-                  label="Fecha preferida *"
+                  label="Fecha preferida"
                   type="date"
                   min={new Date().toISOString().split("T")[0]}
                   error={errors.fecha_cita?.message}
                   {...register("fecha_cita", {
-                    required: "Selecciona una fecha deseada",
+                    required: "Selecciona una fecha",
                   })}
                 />
-
                 <Select
-                  label="Servicio *"
+                  label="Servicio"
                   options={SERVICE_OPTIONS}
                   error={errors.servicio?.message}
                   {...register("servicio", {
@@ -243,64 +167,46 @@ export function ContactForm() {
                 />
               </div>
 
-              <div className="mt-5">
-                <Textarea
-                  label="Mensaje adicional"
-                  placeholder="Cuéntanos brevemente qué necesitas..."
-                  error={errors.mensaje?.message}
-                  {...register("mensaje", {
-                    maxLength: {
-                      value: 500,
-                      message: "El mensaje no puede exceder 500 caracteres",
-                    },
-                  })}
-                />
-              </div>
+              <Textarea
+                label="Mensaje"
+                placeholder="Cuéntanos qué necesitas..."
+                error={errors.mensaje?.message}
+                {...register("mensaje", {
+                  maxLength: { value: 500, message: "Máximo 500 caracteres" },
+                })}
+              />
+            </div>
 
-              {submitStatus === "success" && (
-                <div
-                  className="mt-5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
-                  role="status"
-                >
-                  ¡Solicitud enviada con éxito! Nos comunicaremos contigo muy pronto.
-                </div>
-              )}
-
-              {submitStatus === "error" && (
-                <div
-                  className="mt-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
-                  role="alert"
-                >
-                  {errorMessage}
-                </div>
-              )}
-
-              <Button
-                type="submit"
-                size="lg"
-                className="mt-6 w-full"
-                disabled={isSubmitting}
+            {submitStatus === "success" && (
+              <p
+                className="mt-5 rounded-2xl border border-sky-200/60 bg-sky-50/80 px-4 py-3 text-sm text-sky-700"
+                role="status"
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
-                    Enviando...
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-5 w-5" aria-hidden="true" />
-                    Solicitar cita ahora
-                  </>
-                )}
-              </Button>
-
-              <p className="mt-4 text-center text-xs text-slate-400">
-                Al enviar aceptas nuestra política de privacidad. Respuesta en menos de 24h.
+                Solicitud preparada. Se abrió tu correo para enviarla.
               </p>
-            </form>
-          </FadeIn>
+            )}
+
+            <Button type="submit" size="lg" className="mt-8 w-full">
+              <Send className="h-4 w-4" aria-hidden="true" />
+              Contáctanos
+            </Button>
+          </form>
+        </div>
+
+        <div className="mt-4">
+          <div className="mb-8 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sky-500">
+              Ubicación
+            </p>
+            <h3 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[#1d1d1f] sm:text-3xl">
+              Visítanos en Miraflores
+            </h3>
+          </div>
+          <LocationMap />
         </div>
       </div>
+
+      <div className="h-16 sm:h-20" aria-hidden="true" />
     </section>
   );
 }

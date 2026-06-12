@@ -19,7 +19,7 @@ export function StarRating({ rating, max = 5, className }: StarRatingProps) {
           className={cn(
             "h-4 w-4",
             index < rating
-              ? "fill-amber-400 text-amber-400"
+              ? "fill-sky-400 text-sky-400"
               : "fill-slate-200 text-slate-200",
           )}
           aria-hidden="true"

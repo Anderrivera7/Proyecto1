@@ -1,52 +1,35 @@
-import {
-  Award,
-  Star,
-  Users,
-  Zap,
-  type LucideIcon,
-} from "lucide-react";
-import { FadeIn } from "@/components/ui/FadeIn";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
-import { STATS } from "@/lib/constants";
+"use client";
 
-const iconMap: Record<string, LucideIcon> = {
-  users: Users,
-  star: Star,
-  award: Award,
-  zap: Zap,
-};
+import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+import { STATS } from "@/lib/constants";
 
 export function StatsBar() {
   return (
-    <section className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 py-20 sm:py-24">
+    <section className="border-y border-black/[0.04] bg-white py-20 sm:py-24">
       <div className="container-main">
-        <FadeIn>
-          <SectionHeading
-            light
-            title="Resultados que hablan por sí solos"
-            description="Más de una década transformando sonrisas y vidas"
-          />
-        </FadeIn>
+        <div className="text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sky-500">
+            Resultados
+          </p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[#1d1d1f] sm:text-3xl">
+            Números que nos respaldan
+          </h2>
+        </div>
 
-        <StaggerContainer className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {STATS.map((stat) => {
-            const Icon = iconMap[stat.icon] ?? Users;
-
-            return (
-              <StaggerItem key={stat.label}>
-                <article className="rounded-2xl bg-white p-6 text-center shadow-lg">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                    <Icon className="h-6 w-6" aria-hidden="true" />
-                  </div>
-                  <p className="text-3xl font-extrabold text-blue-600">{stat.value}</p>
-                  <p className="mt-1 font-bold text-slate-900">{stat.label}</p>
-                  <p className="mt-1 text-sm text-slate-500">{stat.description}</p>
-                </article>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
+        <div className="mt-12 grid grid-cols-2 gap-10 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-black/[0.06]">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="px-0 text-center lg:px-8">
+              <AnimatedCounter
+                value={stat.value}
+                className="block text-4xl font-semibold tracking-[-0.03em] text-sky-500 sm:text-5xl lg:text-[4rem] lg:leading-none"
+              />
+              <h3 className="mt-3 text-[15px] font-semibold tracking-[-0.01em] text-[#1d1d1f]">
+                {stat.label}
+              </h3>
+              <p className="mt-1 text-xs text-[#86868b] sm:text-sm">{stat.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

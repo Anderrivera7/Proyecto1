@@ -2,8 +2,6 @@ import type {
   Benefit,
   FeaturedService,
   HeroSlide,
-  PlatformRating,
-  ProcessStep,
   Service,
   StatItem,
   Testimonial,
@@ -114,14 +112,6 @@ export const FOOTER_SERVICES = [
   "Blanqueamiento",
   "Endodoncia",
   "Odontopediatría",
-] as const;
-
-export const FOOTER_COMPANY = [
-  "Sobre nosotros",
-  "Nuestro equipo",
-  "Instalaciones",
-  "Blog dental",
-  "Trabaja con nosotros",
 ] as const;
 
 export const FOOTER_LEGAL = [
@@ -255,43 +245,6 @@ export const TESTIMONIALS: Testimonial[] = [
     rating: 5,
     initials: "AM",
     service: "Blanqueamiento",
-  },
-];
-
-export const PLATFORM_RATINGS: PlatformRating[] = [
-  { platform: "Google Reviews", rating: "4.9/5", reviews: "320+ reseñas" },
-  { platform: "Doctoralia", rating: "4.8/5", reviews: "180+ reseñas" },
-  { platform: "Facebook", rating: "4.9/5", reviews: "250+ reseñas" },
-];
-
-export const PROCESS_STEPS: ProcessStep[] = [
-  {
-    step: 1,
-    title: "Agenda tu cita",
-    description:
-      "Reserva en línea en menos de 2 minutos. Confirmación inmediata.",
-    icon: "calendar",
-  },
-  {
-    step: 2,
-    title: "Evaluación profesional",
-    description:
-      "Diagnóstico completo con imágenes digitales y revisión de tu historial dental.",
-    icon: "search",
-  },
-  {
-    step: 3,
-    title: "Tratamiento personalizado",
-    description:
-      "Plan de tratamiento a tu medida con las mejores opciones y tecnología disponible.",
-    icon: "stethoscope",
-  },
-  {
-    step: 4,
-    title: "Seguimiento continuo",
-    description:
-      "Te acompañamos en cada etapa con controles periódicos para garantizar resultados duraderos.",
-    icon: "check-circle",
   },
 ];
 

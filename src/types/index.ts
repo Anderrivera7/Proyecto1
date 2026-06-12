@@ -45,22 +45,9 @@ export interface Testimonial {
   featured?: boolean;
 }
 
-export interface ProcessStep {
-  step: number;
-  title: string;
-  description: string;
-  icon: string;
-}
-
 export interface StatItem {
   value: string;
   label: string;
   description: string;
   icon: string;
-}
-
-export interface PlatformRating {
-  platform: string;
-  rating: string;
-  reviews: string;
 }
